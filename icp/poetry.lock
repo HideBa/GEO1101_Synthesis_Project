@@ -12,6 +12,23 @@ files = [
 ]
 
 [[package]]
+name = "asteval"
+version = "1.0.4"
+description = "Safe, minimalistic evaluator of python expression using ast module"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "asteval-1.0.4-py3-none-any.whl", hash = "sha256:7a88bfd0dd1eabdf20bb4995904df742cecf876f7f9e700f22231abf4e34d50c"},
+    {file = "asteval-1.0.4.tar.gz", hash = "sha256:15e63bd01fce65aded51357f7e1debc6f46100d777c372af11c27c07cb740074"},
+]
+
+[package.extras]
+all = ["asteval[dev,doc,test]"]
+dev = ["build", "twine"]
+doc = ["Sphinx"]
+test = ["coverage", "pytest", "pytest-cov"]
+
+[[package]]
 name = "attrs"
 version = "24.2.0"
 description = "Classes Without Boilerplate"
@@ -355,6 +372,21 @@ files = [
     {file = "dash_table-5.0.0-py3-none-any.whl", hash = "sha256:19036fa352bb1c11baf38068ec62d172f0515f73ca3276c79dee49b95ddc16c9"},
     {file = "dash_table-5.0.0.tar.gz", hash = "sha256:18624d693d4c8ef2ddec99a6f167593437a7ea0bf153aa20f318c170c5bc7308"},
 ]
+
+[[package]]
+name = "dill"
+version = "0.3.8"
+description = "serialize all of Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "dill-0.3.8-py3-none-any.whl", hash = "sha256:c36ca9ffb54365bdd2f8eb3eff7d2a21237f8452b57ace88b1ac615b7e815bd7"},
+    {file = "dill-0.3.8.tar.gz", hash = "sha256:3ebe3c479ad625c4553aca177444d89b486b1d84982eeacded644afc0cf797ca"},
+]
+
+[package.extras]
+graph = ["objgraph (>=1.7.2)"]
+profile = ["gprof2dot (>=2022.7.29)"]
 
 [[package]]
 name = "fastjsonschema"
@@ -743,6 +775,30 @@ laszip = ["laszip (>=0.2.1,<0.3.0)"]
 lazrs = ["lazrs (>=0.6.0,<0.7.0)"]
 pyproj = ["pyproj"]
 requests = ["requests"]
+
+[[package]]
+name = "lmfit"
+version = "1.3.2"
+description = "Least-Squares Minimization with Bounds and Constraints"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "lmfit-1.3.2-py3-none-any.whl", hash = "sha256:2b834f054cd7a5172f3b431345b292e5d95ea387d6f96d60ad35a11b8efee6ac"},
+    {file = "lmfit-1.3.2.tar.gz", hash = "sha256:31beeae1f027c1b8c14dcd7f2e8488a80b75fb389e77fca677549bdc2fe597bb"},
+]
+
+[package.dependencies]
+asteval = ">=1.0"
+dill = ">=0.3.4"
+numpy = ">=1.19"
+scipy = ">=1.6"
+uncertainties = ">=3.2.2"
+
+[package.extras]
+all = ["lmfit[dev,doc,test]"]
+dev = ["build", "check-wheel-contents", "flake8-pyproject", "pre-commit", "twine"]
+doc = ["Pillow", "Sphinx", "cairosvg", "corner", "emcee (>=3.0.0)", "ipykernel", "jupyter-sphinx (>=0.2.4)", "matplotlib", "numdifftools", "numexpr", "pandas", "pycairo", "sphinx-gallery (>=0.10)", "sphinxcontrib-svg2pdfconverter", "sympy"]
+test = ["coverage", "flaky", "pytest", "pytest-cov"]
 
 [[package]]
 name = "markupsafe"
@@ -1750,6 +1806,23 @@ test = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "ini2toml[lite] (>=
 type = ["importlib-metadata (>=7.0.2)", "jaraco.develop (>=7.21)", "mypy (==1.11.*)", "pytest-mypy"]
 
 [[package]]
+name = "simpleicp"
+version = "2.0.14"
+description = "Simple version of the Iterative Closest Point (ICP) algorithm"
+optional = false
+python-versions = "*"
+files = [
+    {file = "simpleicp-2.0.14-py3-none-any.whl", hash = "sha256:8416a02548c69ef0764fdc013abaea6614647ca07a4c39c562f419d0346178ce"},
+    {file = "simpleicp-2.0.14.tar.gz", hash = "sha256:2db05c8beb1074a89ad7edeb2634f6ee9f1bab2293d962d32ffe09d3c75c9bd3"},
+]
+
+[package.dependencies]
+lmfit = "*"
+numpy = "*"
+pandas = "*"
+scipy = ">=1.6"
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -1844,6 +1917,23 @@ files = [
 ]
 
 [[package]]
+name = "uncertainties"
+version = "3.2.2"
+description = "calculations with values with uncertainties, error propagation"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "uncertainties-3.2.2-py3-none-any.whl", hash = "sha256:fd8543355952f4052786ed4150acaf12e23117bd0f5bd03ea07de466bce646e7"},
+    {file = "uncertainties-3.2.2.tar.gz", hash = "sha256:e62c86fdc64429828229de6ab4e11466f114907e6bd343c077858994cc12e00b"},
+]
+
+[package.extras]
+all = ["uncertainties[arrays,doc,test]"]
+arrays = ["numpy"]
+doc = ["python-docs-theme", "sphinx", "sphinx-copybutton"]
+test = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "urllib3"
 version = "2.2.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1899,4 +1989,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "10e5c437edc3e6b5e07c4cdefda8ff297dbc9c7130504e9e08150a62d8946e48"
+content-hash = "dea11b75b3e7f3aece37269afb337919c1cc6655374c0a632cef626383a9b5da"

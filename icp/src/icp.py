@@ -5,6 +5,7 @@ from functools import partial
 from pycpd import RigidRegistration, AffineRegistration
 import rerun as rr
 import matplotlib.pyplot as plt
+from simpleicp import PointCloud, SimpleICP
 
 
 def read_pc(filepath):
@@ -54,21 +55,27 @@ def main():
     # target_path = os.path.join(script_dir, "data/geolab_iphone_thinned_clipped.las")
     source = read_pc(source_path)
     translation = [10, 10, 10]
-    source = translate_points(source, translation)
+    # source = translate_points(source, translation)
     target = read_pc(target_path)
-    print("start---------")
+
+    pc_fix = PointCloud(target, columns=["x", "y", "z"])
+    pc_mov = PointCloud(source, columns=["x", "y", "z"])
+
+    icp = SimpleICP()
+
+    icp.add_point_clouds(pc_fix, pc_mov)
+
     rr.init("rerun_ICP_pointCloud")
     rr.spawn()
-    rr.log("source points", rr.Points3D(source, radii=0.1))
-    rr.log("target points", rr.Points3D(target, radii=0.1))
+    rr.log("source points", rr.Points3D(source, radii=0.01))
+    rr.log("target points", rr.Points3D(target, radii=0.01))
 
-    affine = AffineRegistration(X=target, Y=source)
-    TY, reg = affine.register()
-    print("middle---------")
-    print("end---------")
-    plt.show()
+    H, X_mov_transformed, rigid_body_transformation_params, distance_residuals = (
+        icp.run(max_overlap_distance=100)
+    )
+    rr.log("transformed", rr.Points3D(X_mov_transformed, radii=0.01))
 
-    rr.log("transformed", rr.Points3D(TY, radii=0.1))
+    # plt.show()
 
 
 if __name__ == "__main__":

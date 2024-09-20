@@ -19,6 +19,7 @@ laspy = "^2.5.4"
 pycpd = "^2.0.0"
 rerun-sdk = "^0.18.2"
 matplotlib = "^3.9.2"
+simpleicp = "^2.0.14"
 
 
 [build-system]
