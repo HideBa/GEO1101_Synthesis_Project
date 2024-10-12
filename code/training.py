@@ -14,14 +14,12 @@ from tqdm import tqdm
 
 
 def training(
-    dataset_dir: str = os.path.join("data", "training"),
-    cluster_num: int = 10,
-    depth=2,
-    vocab_path: str = VOCABULARY_CACHE_PATH,
-    image_name_path: str = IMAGE_NAMES_CACHE_PATH,
-    database_path: str = DATABASE_CACHE_PATH,
+        dataset_dir: str,
+        cache_dir: str,
+        cluster_num: int = 10,
+        depth=2,
 ) -> None:
-    print("===Loading Images===")
+    print(f"===Loading Images from {dataset_dir}===")
     program_dir = os.getcwd()
     orb = cv2.ORB_create()
     dataset_dir = os.path.join(program_dir, dataset_dir)
@@ -39,6 +37,16 @@ def training(
     vocabulary = dbow.Vocabulary(images, cluster_num, depth)
     print("===Vocabulary has been made===")
     print("===Database is being created===")
+
+    # Create cache directory if it doesn't exist
+    if not os.path.exists(cache_dir):
+        os.makedirs(cache_dir)
+
+    # Use dynamic cache paths
+    vocab_path = os.path.join(cache_dir, "vocabulary.pickle")
+    image_name_path = os.path.join(cache_dir, "image_name_index_pairs.npy")
+    database_path = os.path.join(cache_dir, "database.pickle")
+
     vocabulary.save(vocab_path)
     np.save(image_name_path, image_names)
 
@@ -65,7 +73,14 @@ def database(database_path: str) -> dbow.Database:
 if __name__ == "__main__":
     start_time = time.time()  # Start timing
     print("training started: ", start_time)
-    training()
+
+    # Train with different datasets and cache folders
+    training_sets = ["left_only", "right_only", "front_only", "top_only"]
+    for training_set in training_sets:
+        dataset_dir = os.path.join("data", training_set, "images")
+        cache_dir = os.path.join("data", training_set, "cache")
+        training(dataset_dir, cache_dir)
+
     # Calculate and format elapsed time
     end_time = time.time()
     elapsed_time = end_time - start_time
